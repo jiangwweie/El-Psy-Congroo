@@ -68,13 +68,14 @@ public class HttpUtils {
         httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT,
                 30000);
         HttpPost httpPost = new HttpPost(url);
-
         httpPost.addHeader("method", "POST");
+        httpPost.addHeader("accept", "application/json");
 
         try {
             UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nvps);
             entity.setContentType("x-www-form-urlencoded");
             httpPost.setEntity(new UrlEncodedFormEntity(nvps));
+
             HttpResponse response = httpClient.execute(httpPost);
             String result = EntityUtils.toString(response.getEntity(), "utf-8");
             System.err.println(result);

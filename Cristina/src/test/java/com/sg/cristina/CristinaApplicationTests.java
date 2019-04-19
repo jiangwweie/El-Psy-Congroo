@@ -1,8 +1,11 @@
 package com.sg.cristina;
 
+import com.sg.cristina.dao.SgUserMapper;
+import com.sg.cristina.entity.SgUser;
 import com.sg.cristina.util.crypto.AES;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -11,6 +14,9 @@ import java.io.UnsupportedEncodingException;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CristinaApplicationTests {
+
+	@Autowired
+	SgUserMapper userMapper ;
 
 	@Test
 	public void contextLoads() {
@@ -23,6 +29,14 @@ public class CristinaApplicationTests {
 			e.printStackTrace();
 		}
 		System.out.println(aes.encrypt(plainData));
+	}
+
+
+	@Test
+	public void testdb(){
+		SgUser user = userMapper.selectByPrimaryKey(1);
+		System.out.println("ok");
+
 	}
 
 }
