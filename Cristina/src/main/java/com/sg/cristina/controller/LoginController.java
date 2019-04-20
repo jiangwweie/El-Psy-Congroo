@@ -1,22 +1,17 @@
 package com.sg.cristina.controller;
 
-import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sg.cristina.constants.Constants;
 import com.sg.cristina.dao.SgUserMapper;
 import com.sg.cristina.entity.SgUser;
 import com.sg.cristina.util.HttpUtils;
 import com.sg.cristina.util.ResultModel;
-import org.apache.commons.io.IOUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
