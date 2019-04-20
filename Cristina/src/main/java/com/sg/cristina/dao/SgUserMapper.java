@@ -1,7 +1,7 @@
 package com.sg.cristina.dao;
 
 import com.sg.cristina.entity.SgUser;
-import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 //@Mapper
 public interface SgUserMapper {
@@ -52,4 +52,13 @@ public interface SgUserMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(SgUser record);
+
+
+    /**
+     * select user by gitId
+     * @param gitId
+     * @return
+     */
+    @Select("select 8 from sg_user where git_id = #{gitId}")
+    SgUser selectByGitId(String gitId);
 }

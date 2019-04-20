@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class LoginController {
     SgUserMapper userMapper;
 
     @RequestMapping("callback")
-    public ResultModel callback(HttpServletRequest request) throws IOException {
+    public ResultModel callback(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //region获取code，然后用code取得access_token
         String responseCode = request.getParameter("code");
         System.out.println("code:" + responseCode);
@@ -56,16 +57,26 @@ public class LoginController {
         //region通过access_token取得用户信息
         String user_info = HttpUtils.doGet(Constants.GITHUB_GET_USERINFO + "?access_token=" + access_token);
         JSONObject jsonObject = JSONObject.parseObject(user_info);
-        String gitId = (String) jsonObject.get("id");
+        String gitId = jsonObject.getString("id");
         //endregion
-
+        System.out.println("github Id :"+gitId);
         //region保存用户信息，执行业务逻辑
         SgUser user = new SgUser();
-        user.setGitId(gitId);
-        int insert = userMapper.insert(user);
-        // TODO: 2019/4/19
+        try {
+            user = userMapper.selectByGitId(gitId);
+            if (user!=null){
+                System.out.println("gitUser  has  already sign up ");
+                return new ResultModel(true, "success", user);
+            }else {
+                System.out.println("redirect to reg page... ");
+                // TODO: 2019/4/20
+                return new ResultModel(false,"need reg",jsonObject);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         //endregion
-        return new ResultModel(true,"success",insert);
+        return new ResultModel(false,"unknown error");
     }
 
 }

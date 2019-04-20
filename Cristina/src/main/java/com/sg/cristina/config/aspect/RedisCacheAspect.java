@@ -2,6 +2,7 @@ package com.sg.cristina.config.aspect;//package com.jiangwei.config.aspect;
 //
 
 import com.sg.cristina.util.RedisUtil;
+import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -26,9 +27,9 @@ import java.lang.reflect.Method;
 @Component
 public class RedisCacheAspect {
 
-//    private static final Logger logger = Logger.getLogger(RedisCacheAspect.class);
+    private static final Logger logger = Logger.getLogger(RedisCacheAspect.class);
     /**
-     * 分隔符 生成key 格式为 类全类名|方法名|参数所属类全类名
+     * 分隔符
      **/
     private static final String DELIMITER = "|";
 
@@ -63,19 +64,21 @@ public class RedisCacheAspect {
         Cacheable cacheable = method.getAnnotation(Cacheable.class);
         //key的value
         String fieldKey = parseKey(cacheable.fieldKey(), method, pjp.getArgs());
-        System.out.println(cacheable.key() + "----" + fieldKey);
-        //使用redis 的hash进行存取，易于管理
+        //使用redis 的hash进行存取，类似于一张表
         result = redisUtil.hget(cacheable.key(), fieldKey);
-        if (result != null) {
-            System.out.println("have get result from redis --------");
-        } else {
+        if (result == null) {
+            System.out.println("cache is empty ,query db--------");
             try {
                 result = pjp.proceed();
-                System.out.println("get result from redis ----------");
+                System.out.println("get result from db ----------");
                 Assert.notNull(fieldKey);
-                redisUtil.hset(cacheable.key(), fieldKey, result, cacheable.expireTime());
+                if (result != null) {
+                    redisUtil.hset(cacheable.key(), fieldKey, result);
+                    System.out.println("set result to cache ----------");
+                }
             } catch (Throwable e) {
                 e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
         return result;
@@ -89,10 +92,9 @@ public class RedisCacheAspect {
         Method method = getMethod(pjp);
         CacheEvict cacheEvict = method.getAnnotation(CacheEvict.class);
         String fieldKey = parseKey(cacheEvict.fieldKey(), method, pjp.getArgs());
-
+        //先删除缓存
         redisUtil.hdel(cacheEvict.key(), fieldKey);
-        //执行真正的删除，先更新数据库在更新缓存是最好的方案
-
+        //然后操作db
         result = pjp.proceed();
 
         return result;
@@ -121,8 +123,10 @@ public class RedisCacheAspect {
             method = aClass.getMethod(signature.getName(), argTypes);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
+            logger.error(e.getMessage());
         } catch (SecurityException e) {
             e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return method;
 

@@ -20,6 +20,14 @@ public final class ResultModel<T> {
     @ApiModelProperty("业务数据")
     private T data;
 
+    public ResultModel(boolean success, String message) {
+        this.success = success;
+        this.message = message;
+    }
+
+    public ResultModel() {
+    }
+
     public ResultModel(boolean success, String message, T data) {
         this.success = success;
         this.message = message;
