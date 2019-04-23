@@ -1,20 +1,21 @@
 package com.sg.cristina.service.impl;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.sg.cristina.config.aspect.CacheEvict;
 import com.sg.cristina.config.aspect.Cacheable;
 import com.sg.cristina.dao.SgUserMapper;
 import com.sg.cristina.entity.SgUser;
 import com.sg.cristina.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * @Author: jiangwei
  * @Date: 2019/4/20
  * @Desc:
  */
-
-@Service
+@Component
+@Service(interfaceClass = UserService.class)
 public class UserServiceImpl implements UserService {
 
 

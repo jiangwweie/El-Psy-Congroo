@@ -4,10 +4,15 @@ import java.io.Serializable;
 
 /**
  * @Author: jiangwei
- * @Date: 2019/4/20
+ * @Date: 2019/4/22
  * @Desc:
  */
-public class BasicVo implements Serializable {
+public abstract class BasicVo implements Serializable {
+
+    public BasicVo() {
+    }
+
+    public abstract String toString();
 
 
 }
