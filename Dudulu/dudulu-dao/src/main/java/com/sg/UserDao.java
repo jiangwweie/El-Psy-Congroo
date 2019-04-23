@@ -1,6 +1,5 @@
-package com.sg.cristina.dao;
+package com.sg;
 
-import com.sg.cristina.entity.SgUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

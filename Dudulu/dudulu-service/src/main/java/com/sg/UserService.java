@@ -1,24 +1,21 @@
-package com.sg.cristina.service;
-
-import com.sg.cristina.entity.SgUser;
-import org.apache.ibatis.annotations.Select;
+package com.sg;
 
 public interface UserService {
 
     /**
      * @mbggenerated
      */
-    int deleteByPrimaryKey(Integer sgId);
+    void deleteByPrimaryKey(Integer sgId);
 
     /**
      * @mbggenerated
      */
-    int insert(SgUser record);
+    void insert(SgUser record);
 
     /**
      * @mbggenerated
      */
-    int insertSelective(SgUser record);
+    void insertSelective(SgUser record);
 
     /**
      * @mbggenerated
@@ -28,12 +25,12 @@ public interface UserService {
     /**
      * @mbggenerated
      */
-    int updateByPrimaryKeySelective(SgUser record);
+    void updateByPrimaryKeySelective(SgUser record);
 
     /**
      * @mbggenerated
      */
-    int updateByPrimaryKey(SgUser record);
+    void updateByPrimaryKey(SgUser record);
 
 
     /**
