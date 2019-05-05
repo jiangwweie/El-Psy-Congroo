@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Created by Trace on 2017-12-01.<br/>
+ * Created by jw
  * Desc:  接口返回结果对象
  */
 @SuppressWarnings("unused")

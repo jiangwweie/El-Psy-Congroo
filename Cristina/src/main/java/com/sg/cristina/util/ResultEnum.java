@@ -3,7 +3,8 @@ package com.sg.cristina.util;
 public enum ResultEnum {
 
     SUCCESS(200, "成功"),
-    ERROR(500, "失败");
+    ERROR(500, "失败"),
+    NO_DATA(501,"没有找到相关数据");
 
     int code;
 

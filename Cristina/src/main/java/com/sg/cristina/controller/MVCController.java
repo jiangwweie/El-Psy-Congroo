@@ -1,9 +1,14 @@
 package com.sg.cristina.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.sg.cristina.entity.SgUser;
 import com.sg.cristina.util.ResultModel;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -67,5 +72,18 @@ public class MVCController {
     private ResultModel test4(@RequestParam("listParam[]") List<String> param){
         String paramStr = "Request successful. Post param : List<String> - " + param.toString();
         return  new ResultModel(true,"",paramStr);
+    }
+
+
+    @RequestMapping("5")
+    private ResultModel test5(@Valid SgUser sgUser, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            for (ObjectError error:allErrors){
+                System.out.println(error.getObjectName()+" : "+error.getDefaultMessage());
+            }
+        }
+        System.out.println("ok");
+        return  new ResultModel(true,"",sgUser);
     }
 }
