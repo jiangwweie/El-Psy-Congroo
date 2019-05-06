@@ -2,7 +2,7 @@ package com.sg.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.sg.SgUser;
-import com.sg.UserDao;
+import com.sg.user.UserDao;
 import com.sg.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
