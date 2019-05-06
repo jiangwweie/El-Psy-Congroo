@@ -23,6 +23,7 @@ public class ResultDto {
     public  ResultDto success(Object data){
         this.code =ResultEnum.SUCCESS.getCode();
         this.message =ResultEnum.SUCCESS.getMsg();
+        this.data = data ;
         return this ;
     }
 

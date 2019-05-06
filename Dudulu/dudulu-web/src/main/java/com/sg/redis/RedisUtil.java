@@ -18,7 +18,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Component
-public class RedisDao {
+public class RedisUtil {
 //    private static Logger logger = Logger.getLogger(RedisUtil.class);
 
     @Autowired

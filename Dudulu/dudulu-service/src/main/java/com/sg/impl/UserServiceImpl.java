@@ -2,6 +2,8 @@ package com.sg.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.sg.SgUser;
+import com.sg.aspect.CacheEvict;
+import com.sg.aspect.Cacheable;
 import com.sg.user.UserDao;
 import com.sg.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ public class UserServiceImpl implements UserService {
      * @param sgId
      * @mbggenerated
      */
+    @CacheEvict(key = "user",fieldKey = "#sgId")
     @Override
     public void deleteByPrimaryKey(Integer sgId) {
         userDao.deleteById(sgId);
@@ -35,6 +38,7 @@ public class UserServiceImpl implements UserService {
      * @param record
      * @mbggenerated
      */
+
     @Override
     public void insert(SgUser record) {
         userDao.save(record);
@@ -44,6 +48,7 @@ public class UserServiceImpl implements UserService {
      * @param record
      * @mbggenerated
      */
+
     @Override
     public void insertSelective(SgUser record) {
         userDao.save(record);
@@ -53,6 +58,7 @@ public class UserServiceImpl implements UserService {
      * @param sgId
      * @mbggenerated
      */
+    @Cacheable(key = "user",fieldKey = "#sgId")
     @Override
     public SgUser selectByPrimaryKey(Integer sgId) {
         Optional<SgUser> optionalSgUser = userDao.findById(sgId);
@@ -67,6 +73,7 @@ public class UserServiceImpl implements UserService {
      * @param record
      * @mbggenerated
      */
+    @CacheEvict(key = "user",fieldKey = "#record.sgId")
     @Override
     public void updateByPrimaryKeySelective(SgUser record) {
         userDao.save(record);
@@ -77,6 +84,7 @@ public class UserServiceImpl implements UserService {
      * @param record
      * @mbggenerated
      */
+    @CacheEvict(key = "user",fieldKey = "#record.sgId")
     @Override
     public void updateByPrimaryKey(SgUser record) {
         userDao.save(record);

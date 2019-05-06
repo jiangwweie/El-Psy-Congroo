@@ -32,7 +32,11 @@ public class UserController {
     @GetMapping("select/{id}")
     public Object getuser(@PathVariable Integer id){
         SgUser user = userService.selectByPrimaryKey(id);
-        return user;
+        if (user!=null){
+            return new ResultDto().success(user);
+        }else {
+            return new ResultDto().error(ResultEnum.NO_DATA);
+        }
     }
 
     @RequestMapping("add")

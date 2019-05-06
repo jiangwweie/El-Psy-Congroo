@@ -1,20 +1,24 @@
 package com.sg;
 
+import com.fasterxml.jackson.databind.jsonschema.JsonSerializableSchema;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 @Setter
 @Getter
 @Data
 @Entity
+@Accessors(chain = true)
 @Table(name="sg_user")
-public class SgUser  {
+public class SgUser implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -98,9 +102,4 @@ public class SgUser  {
         return result;
     }
 
-    public SgUser(String username, String password, String mobile) {
-        this.username = username;
-        this.password = password;
-        this.mobile = mobile;
-    }
 }

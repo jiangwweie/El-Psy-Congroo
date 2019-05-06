@@ -7,6 +7,7 @@ public enum ResultEnum {
 
     //**********  成功  ************
     INTERNAL_ERROR(500, "系统异常！"),
+    NO_DATA(501, "没有查询到相关数据！"),
     SUCCESS(200,"成功");
     ;
 
