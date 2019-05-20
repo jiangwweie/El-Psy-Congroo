@@ -10,6 +10,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * @Date: 2019/4/23
  * @Desc:
  */
+
 @EnableDubboConfiguration
 @EnableAspectJAutoProxy
 @SpringBootApplication

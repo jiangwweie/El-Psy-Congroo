@@ -29,7 +29,7 @@ public class UserController {
     @Autowired
     UserServiceImpl userService ;
 
-    @GetMapping("select/{id}")
+    @GetMapping("/{id}")
     public Object getuser(@PathVariable Integer id){
         SgUser user = userService.selectByPrimaryKey(id);
         if (user!=null){

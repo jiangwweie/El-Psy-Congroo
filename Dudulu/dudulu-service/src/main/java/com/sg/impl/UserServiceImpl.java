@@ -4,8 +4,10 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.sg.SgUser;
 import com.sg.aspect.CacheEvict;
 import com.sg.aspect.Cacheable;
-import com.sg.user.UserDao;
+import com.sg.user.dao.UserDao;
 import com.sg.UserService;
+import com.sg.user.mapper.SgUserMapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,18 +19,21 @@ import java.util.Optional;
  * @Desc:
  */
 @Component
-@Service(interfaceClass =UserService.class )
+@Service(interfaceClass = UserService.class)
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    UserDao userDao ;
+    UserDao userDao;
+
+    @Autowired
+    SgUserMapper userMapper;
 
 
     /**
      * @param sgId
      * @mbggenerated
      */
-    @CacheEvict(key = "user",fieldKey = "#sgId")
+    @CacheEvict(key = "user", fieldKey = "#sgId")
     @Override
     public void deleteByPrimaryKey(Integer sgId) {
         userDao.deleteById(sgId);
@@ -58,22 +63,22 @@ public class UserServiceImpl implements UserService {
      * @param sgId
      * @mbggenerated
      */
-    @Cacheable(key = "user",fieldKey = "#sgId")
+    @Cacheable(key = "user", fieldKey = "#sgId")
     @Override
     public SgUser selectByPrimaryKey(Integer sgId) {
         Optional<SgUser> optionalSgUser = userDao.findById(sgId);
-        if (optionalSgUser.isPresent()){
+        if (optionalSgUser.isPresent()) {
             SgUser sgUser = optionalSgUser.get();
-            return sgUser ;
+            return sgUser;
         }
-        return  null ;
+        return null;
     }
 
     /**
      * @param record
      * @mbggenerated
      */
-    @CacheEvict(key = "user",fieldKey = "#record.sgId")
+    @CacheEvict(key = "user", fieldKey = "#record.sgId")
     @Override
     public void updateByPrimaryKeySelective(SgUser record) {
         userDao.save(record);
@@ -84,7 +89,7 @@ public class UserServiceImpl implements UserService {
      * @param record
      * @mbggenerated
      */
-    @CacheEvict(key = "user",fieldKey = "#record.sgId")
+    @CacheEvict(key = "user", fieldKey = "#record.sgId")
     @Override
     public void updateByPrimaryKey(SgUser record) {
         userDao.save(record);
@@ -100,4 +105,11 @@ public class UserServiceImpl implements UserService {
     public SgUser selectByGitId(String gitId) {
         return null;
     }
+
+
+    @Override
+    public SgUser selectByUsername(String username) {
+        return userMapper.selectByUsername(username);
+    }
+
 }

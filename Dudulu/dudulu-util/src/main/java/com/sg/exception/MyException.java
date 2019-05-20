@@ -14,10 +14,16 @@ public class MyException extends RuntimeException {
      */
     private Integer code;
 
-    public MyException(Integer code,String message) {
+    public MyException(Integer code, String message) {
         //父类的构造方法本身会传message进去
         super(message);
         this.code = code;
+    }
+
+    public MyException(ResultEnum resultEnum) {
+        //父类的构造方法本身会传message进去
+        super(resultEnum.getMsg());
+        this.code = resultEnum.getCode();
     }
 
     public Integer getCode() {

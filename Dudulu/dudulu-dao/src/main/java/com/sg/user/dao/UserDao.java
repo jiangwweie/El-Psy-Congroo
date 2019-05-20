@@ -1,4 +1,4 @@
-package com.sg.user;
+package com.sg.user.dao;
 
 import com.sg.SgUser;
 import org.springframework.data.jpa.repository.JpaRepository;

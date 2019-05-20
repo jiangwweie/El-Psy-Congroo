@@ -1,9 +1,7 @@
 package com.sg;
 
 import com.fasterxml.jackson.databind.jsonschema.JsonSerializableSchema;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -17,6 +15,8 @@ import java.io.Serializable;
 @Data
 @Entity
 @Accessors(chain = true)
+@Builder
+@AllArgsConstructor
 @Table(name="sg_user")
 public class SgUser implements Serializable {
 

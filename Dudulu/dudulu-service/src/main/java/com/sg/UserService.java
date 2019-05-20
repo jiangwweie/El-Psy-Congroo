@@ -39,4 +39,6 @@ public interface UserService {
      * @return
      */
     SgUser selectByGitId(String gitId);
+
+    SgUser selectByUsername(String username);
 }

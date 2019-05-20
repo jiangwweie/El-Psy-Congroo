@@ -3,6 +3,8 @@ package com.sg.exception;
 public enum ResultEnum {
     //**********  异常  ************
     LESS_INPARAM(600,"缺少入参"),
+    NO_AUTH(403,"没有访问权限"),
+    TOKEN_EXPIRED(402,"权限过期"),
     //**********  失败  ************
 
     //**********  成功  ************
