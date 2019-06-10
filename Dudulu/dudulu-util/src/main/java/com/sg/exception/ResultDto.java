@@ -32,4 +32,10 @@ public class ResultDto {
         this.message = resultEnum.getMsg();
         return this ;
     }
+
+    public ResultDto error(Exception e){
+        this.code = 500 ;
+        this.message = e.getMessage();
+        return this;
+    }
 }

@@ -46,7 +46,7 @@ public class MyJwtGenerator extends JwtGenerator {
     }
 
     private Date expiretime() {
-        long l = new Date().getTime() + 3600l;
+        long l = new Date().getTime() + 3600000l;
         return new Date(l);
     }
 

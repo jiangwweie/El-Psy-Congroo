@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
             MyException myException = (MyException) e;
             return ResultDto.builder().code(myException.getCode()).message(myException.getMessage()).build();
         } else {
-            return new ResultDto().error(ResultEnum.INTERNAL_ERROR);
+            return new ResultDto().error(e);
         }
     }
 

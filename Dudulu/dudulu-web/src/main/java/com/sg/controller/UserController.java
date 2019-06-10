@@ -1,20 +1,27 @@
 package com.sg.controller;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sg.SgUser;
 import com.sg.exception.MyException;
 import com.sg.exception.ResultDto;
 import com.sg.exception.ResultEnum;
 import com.sg.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.Base64Utils;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -51,4 +58,5 @@ public class UserController {
         }
         return new ResultDto().success("success");
     }
+
 }

@@ -29,7 +29,6 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.DelegatingFilterProxy;
@@ -146,8 +145,8 @@ public class ShiroConfiguration extends AbstractShiroWebFilterConfiguration {
         //可以设置默认client
         Clients clients = new Clients();
         //token校验器，可以用HeaderClient更安全
-        HeaderClient headerClient = new HeaderClient("token", jwtAuthenticator());
-        headerClient.setHeaderName("Authorization");
+        HeaderClient headerClient = new HeaderClient("Authorization", jwtAuthenticator());
+        //headerClient.setHeaderName("Authorization");
         headerClient.setPrefixHeader("Bearer ");
         headerClient.setName("jwt");
         //ParameterClient parameterClient = new ParameterClient();
@@ -243,10 +242,7 @@ public class ShiroConfiguration extends AbstractShiroWebFilterConfiguration {
         CallbackFilter callbackFilter = new CallbackFilter();
         callbackFilter.setConfig(config);
         filters.put("callbackFilter", callbackFilter);
-
         filterFactoryBean.setFilters(filters);
-
-
         return filterFactoryBean;
     }
 
@@ -256,7 +252,6 @@ public class ShiroConfiguration extends AbstractShiroWebFilterConfiguration {
         definition.addPathDefinition("/callback", "callbackFilter");
         definition.addPathDefinition("/you", "anon");
         definition.addPathDefinition("/**", "casSecurityFilter");
-
         return definition;
     }
 
@@ -267,7 +262,6 @@ public class ShiroConfiguration extends AbstractShiroWebFilterConfiguration {
      * @return
      */
     @Bean
-    @DependsOn({"lifecycleBeanPostProcessor"})
     public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator() {
         DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
         advisorAutoProxyCreator.setProxyTargetClass(true);

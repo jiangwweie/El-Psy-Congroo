@@ -53,6 +53,10 @@ public class SgUser implements Serializable {
         super();
     }
 
+    public SgUser(@NotEmpty(message = "用户名不能为空") @Size(min = 6, max = 12, message = "用户名长度在6-12位之间") String username, @NotEmpty(message = "密码不能为空") String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     public boolean equals(final Object o) {
         if (o == this) return true;

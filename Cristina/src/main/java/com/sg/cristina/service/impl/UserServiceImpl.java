@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @Desc:
  */
 @Component
-@Service(interfaceClass = UserService.class)
+//@Service(interfaceClass = UserService.class)
 public class UserServiceImpl implements UserService {
 
 

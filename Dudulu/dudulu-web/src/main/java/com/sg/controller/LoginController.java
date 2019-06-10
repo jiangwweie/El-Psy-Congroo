@@ -8,7 +8,11 @@ import org.pac4j.cas.client.rest.CasRestFormClient;
 import org.pac4j.cas.profile.CasProfile;
 import org.pac4j.cas.profile.CasRestProfile;
 import org.pac4j.core.context.J2EContext;
+import org.pac4j.core.credentials.Credentials;
 import org.pac4j.core.credentials.TokenCredentials;
+import org.pac4j.core.credentials.UsernamePasswordCredentials;
+import org.pac4j.core.exception.HttpAction;
+import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.core.profile.ProfileManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +32,7 @@ import java.util.Optional;
  * @Desc:
  */
 
+@SuppressWarnings("ALL")
 @RestController
 @RequestMapping("")
 public class LoginController {
@@ -43,7 +48,6 @@ public class LoginController {
     @Value("${cas.serviceUrl}")
     private String serviceUrl;
 
-
     @Autowired
     CasRestFormClient casRestFormClient ;
 
@@ -51,15 +55,21 @@ public class LoginController {
     MyJwtGenerator generator;
 
     @RequestMapping("/user/login")
-    public Object login(HttpServletRequest request, HttpServletResponse response) {
+    public Object login(HttpServletRequest request, HttpServletResponse response) throws HttpAction {
         Map<String, Object> model = new HashMap<>();
         J2EContext context = new J2EContext(request, response);
         final ProfileManager<CasRestProfile> manager = new ProfileManager(context);
-        final Optional<CasRestProfile> profile = manager.get(true);
+        final Optional<CasRestProfile> profile = manager.get(false);
         //获取ticket
         TokenCredentials tokenCredentials = casRestFormClient.requestServiceTicket( serviceUrl, profile.get(), context);
         //根据ticket获取用户信息
         final CasProfile casProfile = casRestFormClient.validateServiceTicket(serviceUrl, tokenCredentials, context);
+
+        Credentials credentials = casRestFormClient.getCredentials(context);
+        CommonProfile commonProfile = casRestFormClient.getUserProfile((UsernamePasswordCredentials) credentials, context);
+        String ticketGrantingTicketId = ((CasRestProfile) commonProfile).getTicketGrantingTicketId();
+        System.out.println("---------tgt-------------"+ticketGrantingTicketId);
+        // TODO: 2019-05-29   add to cookie
         //生成jwt token
         String token = generator.generate(casProfile);
         // TODO: 2019-05-20 缓存token 
